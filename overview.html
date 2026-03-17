@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jornada do Lead — LinkedIn Outreach</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #16161a;
+    --bg3: #1e1e24;
+    --border: rgba(255,255,255,0.08);
+    --border-active: rgba(255,255,255,0.18);
+    --text: #f0eff4;
+    --muted: #8a8a9a;
+    --faint: #3a3a48;
+
+    --ghl: #7c6ef7;
+    --ghl-bg: rgba(124,110,247,0.12);
+    --ghl-border: rgba(124,110,247,0.35);
+
+    --sistema: #2dd4a0;
+    --sistema-bg: rgba(45,212,160,0.1);
+    --sistema-border: rgba(45,212,160,0.3);
+
+    --linkedin: #f5a623;
+    --linkedin-bg: rgba(245,166,35,0.1);
+    --linkedin-border: rgba(245,166,35,0.3);
+
+    --agente: #f07060;
+    --agente-bg: rgba(240,112,96,0.1);
+    --agente-border: rgba(240,112,96,0.3);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px 60px;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .header {
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ─── Progress ─── */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 0;
+  }
+
+  .dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--bg2);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    font-family: 'DM Mono', monospace;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dot.done {
+    background: var(--sistema);
+    border-color: var(--sistema);
+    color: #0d0d0f;
+  }
+
+  .dot.active {
+    background: var(--bg2);
+    border-color: var(--ghl);
+    color: var(--ghl);
+    box-shadow: 0 0 0 4px rgba(124,110,247,0.15);
+  }
+
+  .seg {
+    flex: 1;
+    height: 2px;
+    background: var(--faint);
+    transition: background 0.4s ease;
+  }
+
+  .seg.done {
+    background: var(--sistema);
+  }
+
+  /* ─── Card ─── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+    min-height: 280px;
+  }
+
+  .card-top {
+    padding: 24px 28px 0;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .badge-ghl    { background: var(--ghl-bg);     color: var(--ghl);     border-color: var(--ghl-border); }
+  .badge-sistema{ background: var(--sistema-bg); color: var(--sistema); border-color: var(--sistema-border); }
+  .badge-linkedin{ background: var(--linkedin-bg); color: var(--linkedin); border-color: var(--linkedin-border); }
+  .badge-agente { background: var(--agente-bg);  color: var(--agente);  border-color: var(--agente-border); }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: #b0afbc;
+    line-height: 1.75;
+    margin-bottom: 24px;
+  }
+
+  .card-actors {
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .actor-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    margin-bottom: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .actor {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--bg2);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── Nav ─── */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: 1px solid var(--border-active);
+    background: var(--bg2);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn:hover:not(:disabled) {
+    background: var(--bg3);
+    border-color: rgba(255,255,255,0.28);
+  }
+
+  .btn:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
+  .btn-next {
+    background: var(--ghl);
+    border-color: var(--ghl);
+    color: #fff;
+  }
+
+  .btn-next:hover:not(:disabled) {
+    background: #9080f9;
+    border-color: #9080f9;
+  }
+
+  .counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ─── Legend ─── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    padding: 14px 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-top, .card-actors {
+    animation: fadeSlide 0.25s ease;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <h1>Jornada do lead — LinkedIn Outreach</h1>
+    <p>Do cadastro no CRM até a reunião agendada</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--ghl)"></div> GoHighLevel</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--sistema)"></div> Nosso sistema</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--linkedin)"></div> LinkedIn / Lead</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--agente)"></div> Agente de IA</div>
+  </div>
+
+  <div class="progress-wrap" id="progress"></div>
+
+  <div class="card" id="card">
+    <div class="card-top" id="card-top"></div>
+    <div class="card-actors" id="card-actors"></div>
+  </div>
+
+  <div class="nav">
+    <button class="btn" id="btn-prev">← Anterior</button>
+    <span class="counter" id="counter"></span>
+    <button class="btn btn-next" id="btn-next">Próximo →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    badge: "GHL", badgeClass: "badge-ghl",
+    title: "Um novo lead entra no GoHighLevel",
+    desc: "O time de vendas cadastra um contato no CRM com o link do perfil LinkedIn dessa pessoa. Um workflow automático do GoHighLevel detecta o novo lead e avisa o nosso sistema via webhook.",
+    actors: ["GoHighLevel (CRM)", "Workflow automático", "Link do LinkedIn do lead"]
+  },
+  {
+    badge: "Sistema", badgeClass: "badge-sistema",
+    title: "O sistema envia um pedido de conexão no LinkedIn",
+    desc: "O sistema recebe o aviso e usa o Unipile — uma ferramenta que acessa o LinkedIn do cliente — para enviar um pedido de conexão para o lead. O CRM é atualizado automaticamente com o status 'convite enviado'.",
+    actors: ["Laravel (nosso sistema)", "Unipile (proxy LinkedIn)", "LinkedIn", "GHL atualizado"]
+  },
+  {
+    badge: "Lead", badgeClass: "badge-linkedin",
+    title: "O lead aceita a conexão",
+    desc: "Quando o lead clica em Aceitar no LinkedIn, o Unipile detecta isso em tempo real e envia um aviso automático para o nosso sistema. Nenhuma ação manual é necessária.",
+    actors: ["Lead (pessoa real)", "LinkedIn", "Unipile → nosso sistema"]
+  },
+  {
+    badge: "Sistema", badgeClass: "badge-sistema",
+    title: "Primeira mensagem enviada automaticamente",
+    desc: "Assim que a conexão é aceita, o sistema envia uma mensagem de apresentação pelo LinkedIn com o objetivo de agendar uma reunião. O CRM é atualizado com a data do próximo follow-up: hoje + 3 dias.",
+    actors: ["Laravel (nosso sistema)", "Unipile → LinkedIn", "GHL: campo próx. follow-up = D+3"]
+  },
+  {
+    badge: "Lead", badgeClass: "badge-linkedin",
+    title: "O lead responde a mensagem",
+    desc: "Quando o lead responde pelo LinkedIn, o Unipile captura a resposta e encaminha para o nosso sistema. Todo o histórico da conversa é salvo automaticamente no banco de dados.",
+    actors: ["Lead responde no LinkedIn", "Unipile detecta resposta", "Histórico salvo (MySQL)"]
+  },
+  {
+    badge: "Agente IA", badgeClass: "badge-agente",
+    title: "A inteligência artificial conduz a conversa",
+    desc: "O agente de IA lê o histórico completo, consulta a base de conhecimento do cliente (Supabase) e, se necessário, verifica os horários livres no calendário do GHL. Então gera uma resposta personalizada e envia pelo LinkedIn.",
+    actors: ["Claude (IA da Anthropic)", "Histórico da conversa", "Base de conhecimento", "Calendário GHL", "Unipile → LinkedIn"]
+  },
+  {
+    badge: "Sistema", badgeClass: "badge-sistema",
+    title: "Follow-ups automáticos se o lead não responder",
+    desc: "Se o lead ficar em silêncio, um agendador automático verifica a fila de follow-ups todo dia. Nos dias D+3 e D+6 uma nova mensagem é enviada lembrando o lead, e o campo no CRM é atualizado.",
+    actors: ["Agendador diário (cron)", "Follow-up D+3", "Follow-up D+6", "GHL atualizado"]
+  },
+  {
+    badge: "Sistema", badgeClass: "badge-sistema",
+    title: "Conversa encerrada e avaliada",
+    desc: "Quando a conversa termina — com reunião agendada ou lead descartado — o sistema gera uma avaliação automática da interação: qualidade das respostas, número de trocas, resultado final. Tudo salvo no banco.",
+    actors: ["Laravel (nosso sistema)", "Relatório gerado", "Banco de dados (MySQL)"]
+  }
+];
+
+let current = 0;
+
+function render() {
+  const s = steps[current];
+  const n = steps.length;
+
+  // Progress dots
+  let prog = '';
+  for (let i = 0; i < n; i++) {
+    if (i > 0) prog += `<div class="seg${i <= current ? ' done' : ''}"></div>`;
+    const cls = i < current ? 'done' : i === current ? 'active' : '';
+    prog += `<div class="dot ${cls}">${i < current ? '✓' : i + 1}</div>`;
+  }
+  document.getElementById('progress').innerHTML = prog;
+
+  // Card top
+  document.getElementById('card-top').innerHTML = `
+    <div class="card-meta">
+      <span class="badge ${s.badgeClass}">${s.badge}</span>
+      <span class="step-num">Passo ${current + 1} de ${n}</span>
+    </div>
+    <div class="card-title">${s.title}</div>
+    <div class="card-desc">${s.desc}</div>
+  `;
+
+  // Card actors
+  document.getElementById('card-actors').innerHTML =
+    `<div class="actor-label">Envolvidos nessa etapa</div>` +
+    s.actors.map(a => `<span class="actor">${a}</span>`).join('');
+
+  // Counter & buttons
+  document.getElementById('counter').textContent = `${current + 1} / ${n}`;
+  document.getElementById('btn-prev').disabled = current === 0;
+  const btnNext = document.getElementById('btn-next');
+  btnNext.disabled = current === n - 1;
+  btnNext.textContent = current === n - 1 ? 'Concluído' : 'Próximo →';
+}
+
+function go(dir) {
+  current = Math.max(0, Math.min(steps.length - 1, current + dir));
+  render();
+}
+
+render();
+
+document.getElementById('btn-prev').addEventListener('click', function() { go(-1); });
+document.getElementById('btn-next').addEventListener('click', function() { go(1); });
+</script>
+</body>
+</html>
