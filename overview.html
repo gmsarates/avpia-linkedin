@@ -257,6 +257,21 @@
     color: var(--muted);
   }
 
+  /* ─── Diagram Button ─── */
+  .btn-diagram {
+    display: block;
+    margin: 0 auto 20px;
+    background: var(--ghl);
+    border-color: var(--ghl);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .btn-diagram:hover {
+    background: #9080f9;
+    border-color: #9080f9;
+  }
+
   /* ─── Legend ─── */
   .legend {
     display: flex;
@@ -315,6 +330,8 @@
     <div class="card-top" id="card-top"></div>
     <div class="card-actors" id="card-actors"></div>
   </div>
+
+  <a href="diagram.html" target="_blank" class="btn btn-diagram">📊 Ver Diagrama</a>
 
   <div class="nav">
     <button class="btn" id="btn-prev">← Anterior</button>
